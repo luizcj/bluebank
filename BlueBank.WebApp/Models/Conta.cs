@@ -25,14 +25,22 @@ namespace BlueBank.WebApp.Models
 
     public partial class Transferencia
     {
+        [Required]
+        [StringLength(6, ErrorMessage = "Agência deve ter no mínimo 4 digitos", MinimumLength = 4)]
+        
         public string AgenciaDebito { get; set; }
+        [Required]
+        [StringLength(6, ErrorMessage = "A conta corrente deve ter no mínimo 6 digitos", MinimumLength = 6)]
         public string NumeroDebito { get; set; }
         public decimal SaldoDebito { get; set; }
-
+        [Required]
+        [StringLength(4, ErrorMessage = "Agência deve ter no mínimo 4 digitos", MinimumLength = 4)]
         public string AgenciaCredito { get; set; }
-        public string NumeroCredito{ get; set; }
+        [Required]
+        [StringLength(6, ErrorMessage = "A conta corrente deve ter no mínimo 6 digitos", MinimumLength = 6)]
+        public string NumeroCredito { get; set; }
         public decimal SaldoCredito { get; set; }
-
+        [Required] 
         public decimal ValorTransferencia { get; set;  }
  
     }

@@ -18,8 +18,7 @@ namespace BlueBank.WebApp.Controllers
             { 
 
             var query = from p in db.Conta where p.Numero == conta.Numero && p.Agencia == conta.Agencia select p;
-            if (query == null) { throw new Exception("Conta não existe")}
-
+            if (query.Count() == 0) { throw new Exception("Conta não existe"); }
             conta = (Conta)query.First();
             }
 
@@ -68,14 +67,8 @@ namespace BlueBank.WebApp.Controllers
                 throw ex;
 
             }
-
-
         }
 
-
-
-
-
-    }
+   }
 }
 
