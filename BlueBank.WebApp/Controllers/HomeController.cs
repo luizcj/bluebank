@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BlueBank.WebApp.Models;
+using System.Web.Mvc.Async;
+using System.Web.Profile;
+using System.Web.Routing;
 using System.Text;
 using BlueBank.WebApp.Controllers;
 
@@ -23,36 +26,41 @@ namespace BlueBank.Controllers
 
 
         [HttpPost]
-        public ActionResult Transferencia(Transferencia transferencia)
+        [ValidateAntiForgeryToken]
+        public ActionResult Transferencia(Transferencia model)
         {
+
+          
+
             try
             {
                 Conta contaDebito = new Conta()
                 {
-                    Agencia = transferencia.AgenciaDebito,
-                    Numero = transferencia.NumeroDebito
+                    Agencia = model.AgenciaDebito,
+                    Numero = model.NumeroDebito
                 };
 
                 Conta contaCredito = new Conta()
                 {
-                    Agencia = transferencia.AgenciaCredito,
-                    Numero = transferencia.NumeroCredito
+                    Agencia = model.AgenciaCredito,
+                    Numero = model.NumeroCredito
                 };
 
                 DBHelper Helper = new DBHelper();
                 contaDebito = Helper.ObterConta(contaDebito);
                 contaCredito = Helper.ObterConta(contaCredito);
 
-                if (Helper.ValidarTransferenciaSaldo(contaDebito, transferencia.ValorTransferencia))
+                if (Helper.ValidarTransferenciaSaldo(contaDebito, model.ValorTransferencia))
                 {
-                    Helper.RealizarDebito(contaDebito, transferencia.ValorTransferencia);
-                    Helper.RealizarCredito(contaCredito, transferencia.ValorTransferencia);
+                    Helper.RealizarDebito(contaDebito, model.ValorTransferencia);
+                    Helper.RealizarCredito(contaCredito, model.ValorTransferencia);
                 }
 
             }
 
             catch (Exception ex)
             {
+                ModelState.AddModelError("Error", ex.Message);
                 return View();
             
             }
@@ -62,6 +70,7 @@ namespace BlueBank.Controllers
      
         public ActionResult Transferencia()
         {
+            
             return View();
         }
 

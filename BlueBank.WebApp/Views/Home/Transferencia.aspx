@@ -5,14 +5,15 @@
 <h2><%= Html.Encode(ViewData["Transferencia"]) %></h2>
 
     <% using (Html.BeginForm("Transferencia", "Home")) %>
-     
+   
     <% { %>
-
+     <%: Html.AntiForgeryToken() %>
+    <%: Html.ValidationSummary() %>
 
     <table style="width: 100%">
         <tr>
             <td style="width: 326px">
-                    Dados de Debito
+                    Dados de Débito
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -23,6 +24,7 @@
         </tr>
         <tr>
             <td style="width: 326px">
+
                     Agência: <%= Html.TextBox("AgenciaDebito") %>
             </td>
             <td> 
@@ -38,7 +40,7 @@
         </tr>
         <tr>
             <td style="width: 326px">
-                Dados  de Credito
+                Dados  de Crédito
             </td>
             <td>&nbsp;</td>
         </tr>
@@ -89,4 +91,7 @@
 
 
 
+</asp:Content>
+<asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <%: Scripts.Render("~/bundles/jqueryval") %>
 </asp:Content>
